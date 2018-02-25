@@ -10,17 +10,18 @@ while getopts cfp flag; do
 	case $flag in
 		c)
 		#Return the Consequence of the first transcript
-		echo $json | jq '.vep_annotations | .[0] | .Consequence'
+		echo $json | jq -r '.vep_annotations | .[0] | .Consequence'
 		;;
 		f)
 		#Return the population allele frequency
-		echo $json | jq '.allele_freq'
+		echo $json | jq -r '.allele_freq'
 		#this could have been done without jq, but it is already used
 		#echo$json | sed 's;.*\"allele_freq\":\([^,]*\).*;\1;'
 		;;
 		p)
 		#The PolyPhen score looks like it may be helpful as well
-		echo $json | jq '.vep_annotations | .[0] | .PolyPhen'
+		echo $json | jq -r '.vep_annotations | .[0] | .PolyPhen' |
+	       		sed 's;.*(\(.*\));\1;' #this just reports the score
 		;;
 esac
 done
