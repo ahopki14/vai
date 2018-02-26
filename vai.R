@@ -2,13 +2,18 @@ library(VariantAnnotation)
 
 v_total <- readVcf(file='./data/coding_challenge_final.vcf')
 
-#for now, set aside multiallelic variants
-w <- grep('2',geno(v_total)$GT)
-v_singles <- v_total[-w,]
-v_multi <- v_total[w,]
+#decompose multi-allelic variants 
+v_expanded <- expand(v_total, row.names=T)
+
+#identify rows which require fixed rownames and fix them
+w <- grep('2', geno(v_expanded)$GT)
+for(a in w){
+	v_expanded[a] <- simplify_variant(v_expanded[a])
+}
+
 
 #get necessary columns from the INFO
-info_data <- info(v_singles)[,c('TYPE','DPRA','AF','DP')]
+info_data <- info(v_expanded)[,c('TYPE','DPRA','AF','DP')]
 
 
 #get necessary columns from the SAMPLE field
