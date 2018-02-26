@@ -5,6 +5,7 @@ v_total <- readVcf(file='./data/coding_challenge_final.vcf')
 #for now, set aside multiallelic variants
 w <- grep('2',geno(v_total)$GT)
 v_singles <- v_total[-w,]
+v_multi <- v_total[w,]
 
 #get necessary columns from the INFO
 info_data <- info(v_singles)[,c('TYPE','DPRA','AF','DP')]
@@ -23,16 +24,6 @@ stopifnot(all(rownames(sample_data)==rownames(info_data)))
 #put them together
 data <- cbind(info_data, sample_data)
 
-
-#a function to call the shell script which does the ExAC lookup
-exac <- function(var){
-	out <- system(paste('sh exac_lookup.sh -cfp',var), intern=T)
-	#clean up the output (NA instead of empty or 'null')
-	out[out==''] <- NA
-	out[out=='null'] <- NA
-	#return
-	out
-}
 
 #Format the variant names for ExAC
 nms <- rownames(data)
@@ -56,4 +47,5 @@ out$Pop_Allele_Freq <- as.numeric(out$Pop_Allele_Freq)
 stopifnot(all(rownames(out)==data$nms))
 
 data <- cbind(data,out)
+write.csv(data,file='out.csv')
 
