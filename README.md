@@ -15,6 +15,8 @@ installation of `libxml2-dev` on my system.
 contains a simple table of relevant info for all variants (for the
 investigator), as well as `out/vai_exac_annotated.vcf` which is an annotated VCF
 file for use in other analyses which might need a VCF. 
+The `exec/exac_lookup.sh` script can also be used as a standalone tool to
+perform single queries of ExAC. 
 I packaged the input VCF file in `inst/extdata` so that it can be called by the
 script portably. I also put the output table and VCF in `out`. 
 
