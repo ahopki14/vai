@@ -12,7 +12,7 @@
 #a function to call the shell script which does the ExAC lookup
 exac <- function(var){
 	#locate the lookup script in the package and call it
-	path <- system.file('exec/exac_lookup.sh',package='vai')
+	path <- system.file('exec','exac_lookup.sh',package='vai')
 	out <- system(paste('sh',path,'-cfps',var), intern=T)
 	#clean up the output (NA instead of empty or 'null')
 	out[out==''] <- NA

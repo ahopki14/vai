@@ -2,7 +2,9 @@
 library(VariantAnnotation)
 library(dplyr)
 
-v_total <- readVcf(file='./data/coding_challenge_final.vcf')
+# I included the vcf in the package, but this can be changed if needed
+path <- system.file('extdata','coding_challenge_final.vcf',package='vai')
+v_total <- readVcf(file=path)
 
 #------------- Fix multi-allelic variants ---------------------------------
 
