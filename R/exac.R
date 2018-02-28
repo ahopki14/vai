@@ -17,6 +17,12 @@ exac <- function(var){
 	#clean up the output (NA instead of empty or 'null')
 	out[out==''] <- NA
 	out[out=='null'] <- NA
+	#check that something was created
+	if(!length(out)>0){warning('Nothing generated from the query,
+				  make sure that curl is installed and 
+				  the exac_lookup.sh script is executable'
+				  )
+	}
 	#return
 	out
 }
