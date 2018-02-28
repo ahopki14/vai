@@ -13,6 +13,12 @@ package requires `VariantAnnotation` and `dplyr` as R dependencies, and needs
 contains a simple table of relevant info for all variants (for the
 investigator), as well as `out/vai_exac_annotated.vcf` which is an annotated VCF
 file for use in other analyses which might need a VCF. 
+I packaged the input VCF file in `inst/extdata` so that it can be called by the
+script portably. I also put the output table and VCF in `out`. 
+
+# Installation and use
+I recommend installing with `devtools::install_github('ahopki14/vai')`. Then
+`vai.R` can be run and should have everything it needs. 
 
 # Future Directions
 * Re-write the exac lookup using the API's batch functionality
@@ -22,5 +28,7 @@ would be nice to have a function that did a single query
 queries in about 8 minutes)
 * Include info from other sources
   * The big thing that is missing is the gene names for variants that are
-not annotated in the ExAC database, expecially insertions/deletions which are
+not annotated in the ExAC database, especially insertions/deletions which are
 unlikely to be shared by other individuals.  
+* I tried to write this to be portable, but I have not tested it on Windows
+  systems 
