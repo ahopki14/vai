@@ -6,7 +6,7 @@ path=http://exac.hms.harvard.edu/rest/variant/variant/$2
 json=`curl $path` 2>/dev/null
 
 #parse the flags and extract the requested info 
-while getopts cfp flag; do
+while getopts cfps flag; do
 	case $flag in
 		c)
 		#Return the Consequence of the first transcript
@@ -23,6 +23,9 @@ while getopts cfp flag; do
 		echo $json | jq -r '.vep_annotations | .[0] | .PolyPhen' |
 	       		sed 's;.*(\(.*\));\1;' #this just reports the score
 		;;
+		s)
+		echo $json | jq -r '.vep_annotations | .[0] | .SYMBOL'
+
 esac
 done
 
