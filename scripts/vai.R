@@ -1,6 +1,7 @@
 #-------------Load libraries and data -------------------------------------
 library(VariantAnnotation)
 library(dplyr)
+library(vai)
 
 # I included the vcf in the package, but this can be changed if needed
 path <- system.file('extdata','coding_challenge_final.vcf',package='vai')
