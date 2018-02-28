@@ -1,39 +1,28 @@
-#-------------Load libraries and data --------------------------------------
+#-------------Load libraries and data -------------------------------------
 library(VariantAnnotation)
 library(dplyr)
 
 v_total <- readVcf(file='./data/coding_challenge_final.vcf')
 source('functions.R')
 
-#------------- Fix multi-allelic variants ----------------------------------
+#------------- Fix multi-allelic variants ---------------------------------
 
 #expand VCF to one allele per line 
 v_expanded <- expand(v_total, row.names=T)
 
-#identify rows which require fixes and fix them
-#  the variant names, reference and alternate alleles and 
-#  position are all fixed 
-w <- grep('2', geno(v_expanded)$GT)
-fixed_records  <- sapply(v_expanded[w], simplify_variant)
+#fix the multi-allelic records
+v_fixed <- simplify_vcf(v_expanded)
 
-#sanity check that all records were checked
-stopifnot(length(fixed_records)==length(w))
-
-#put the new records back in the original vcf data file
-for(a in seq_along(fixed_records)){
-	v_expanded[w[a]] <- fixed_records[[a]]
-}
-
-#----------- Extract info from VCF ---------------------------------------
+#----------- Extract info from VCF ----------------------------------------
 
 #get necessary columns from the INFO
-info_data <- info(v_expanded)[,c('TYPE','AF','DP')]
+info_data <- info(v_fixed)[,c('TYPE','AF','DP')]
 
 
 #get necessary columns from the SAMPLE field
-sample_data <- DataFrame(GT=geno(v_expanded)$GT,
-			  AO=unlist(geno(v_expanded)$AO),
-			  RO=geno(v_expanded)$RO
+sample_data <- DataFrame(GT=geno(v_fixed)$GT,
+			  AO=unlist(geno(v_fixed)$AO),
+			  RO=geno(v_fixed)$RO
 			  )
 colnames(sample_data) <- c('GT','AO','RO') #not sure why this doesn't default
 
@@ -47,7 +36,7 @@ data <- cbind(info_data, sample_data)
 data$PctAlt <- round(data$AO/data$DP,2)
 
 
-#----------- Query ExAC for other info ---------------------------------------
+#----------- Query ExAC for other info ------------------------------------
 
 #Format the variant names for ExAC
 nms <- rownames(data)
@@ -76,7 +65,7 @@ out$Consequence[is.na(out$Consequence)] <- 'Unknown'
 stopifnot(all(rownames(out)==data$nms))
 
 
-#----------- Combine VCF and ExAC Data and save----------------------------
+#----------- Combine VCF and ExAC Data and save table----------------------
 data <- cbind(data,DataFrame(out))
 
 #make names more readable for an Investigator
@@ -93,3 +82,21 @@ data <- rename(as.data.frame(data),
 o <- order(data$Type,data$PolyPhen,decreasing=T)
 write.csv(data[o,],file='table.csv', row.names=F)
 
+
+#---------- Add necessary components back to VCF object and save vcf------
+new_anno <- DataFrame(
+		      Number=c('1','1','1','1'),
+		      Type=c('String','Float','Float','String'),
+		      Description=c(
+				    'Exac major_consequence',
+				    'Population allele frequency from ExAC',
+				    'PolyPhen score of variant',
+				    'Gene SYMBOL from ExAC'
+				    )
+		      )
+rownames(new_anno) <- colnames(data)[9:12]
+#replace the old vcf header INFO fields
+info(header(v_fixed)) <- rbind(info(header(v_fixed)),new_anno)
+
+#save vcf for future use
+writeVcf(v_fixed,file='vai_exac_annotated.vcf')
