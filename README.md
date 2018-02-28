@@ -21,10 +21,10 @@ I recommend installing with `devtools::install_github('ahopki14/vai')`. Then
 `vai.R` can be run and should have everything it needs. 
 
 ## Future Directions
-* Re-write the exac lookup using the API's batch functionality
+* Re-write the ExAC lookup using the API's batch functionality
   * I used the individual lookup methods in the API because I thought it
 would be nice to have a function that did a single query
-  * This works fine, but is a little slow (I usually complete the ~7000
+  * This works fine, but is a little slow (I completed the ~7000
 queries in about 8 minutes)
 * Include info from other sources
   * The big thing that is missing is the gene names for variants that are
@@ -40,7 +40,7 @@ Header        | Description
 Type          | Type of variant, i.e. snp, ins, _etc._
 AlleleFreq    | Allele Frequency reported in the VCF
 ReadDepth     | Total reads covering the variant
-GenoType      | 0/1,0/2, _etc._=Hetrozygous, 1/1=Homozygous    
+GenoType      | 0/1,0/2, _etc._=Heterozygous, 1/1=Homozygous    
 AltReads      | Number of reads supporting the Alternate
 RefReads      | Number of reads supporting the Reference
 PctAlt        | Percentage of reads supporting Alternate
