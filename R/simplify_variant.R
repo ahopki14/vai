@@ -1,7 +1,7 @@
 #' simplify_variant
 #' 
 #' Removes extraneous bases from variants after mult-allelic variants have been
-#' expanded in a VCF file. This function only fixed the REF and ALT fields of
+#' expanded in a VCF file. This function only fixes the REF and ALT fields of
 #' the @geno slot as well as the rownames (containing the variant name in the
 #' format chr:pos_ref/alt). The position component of the variant name is also
 #' corrected appropriately. 

@@ -6,7 +6,9 @@ as well as a re-annotated VCF for downstream analyses.
 ## Dependencies 
 I tried to limit the dependencies, but didn't want to reinvent the wheel. This
 package requires `VariantAnnotation` and `dplyr` as R dependencies, and needs 
-`jq` to be installed on the system (this is in the Debian and Ubuntu Repos). 
+`jq` and `curl` to be installed on the system (this is in the Debian and Ubuntu Repos).
+`VariantAnnotation` has a lot of dependencies, one of which (`XML`) required the
+installation of `libxml2-dev` on my system.
 
 ## What is included
 `scripts/vai.R` provides all the code needed to generate `out/table.csv` which
