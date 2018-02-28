@@ -1,4 +1,3 @@
-
 #a function to call the shell script which does the ExAC lookup
 exac <- function(var){
 	out <- system(paste('sh exac_lookup.sh -cfps',var), intern=T)
@@ -8,39 +7,6 @@ exac <- function(var){
 	#return
 	out
 }
-
-#a function to decompose multi-allelic variants into individual lines
-#this is no longer needed when using expand(vcf)
-decomp_vcf <- function(vcf){
-	stopifnot(class(vcf)=='CollapsedVCF')
-	out <- vcf[0] #makes an empty VCF with the right INFO, etc. 
-	for(a in nrow(vcf)){
-		record <- vcf[a]
-		tmp <- record[c(1,1)] #duplicate the record
-		geno(tmp)$GT <- matrix(c('0/1','1/0')) 
-		#this is ugly, but they need to be formatted as a list
-		geno(tmp)$AO[1] <- list(unlist(geno(tmp)$AO[1])[1])
-		geno(tmp)$AO[2] <- list(unlist(geno(tmp)$AO[2])[2])
-		info(tmp)$AF[1] <- NumericList(info(tmp)$AF[[1]][1])
-		info(tmp)$AF[2] <- NumericList(info(tmp)$AF[[2]][2])
-		fixed(tmp)$ALT[1] <- DNAStringSetList(fixed(tmp)$ALT[[1]][1])
-		fixed(tmp)$ALT[2] <- DNAStringSetList(fixed(tmp)$ALT[[2]][2])
-		#Simplify the variants
-		ALT <- as.character(fixed(tmp)$ALT[[2]])
-		REF <- as.character(fixed(tmp)$REF[[2]])
-		fixed <- simplify_variant(rownames(record)[1],REF,ALT)
-		#overwrite the existing fields with the simplified variant
-		fixed(tmp)$REF[2] <- DNAStringSet(fixed$REF)
-		fixed(tmp)$ALT[2] <- DNAStringSetList(fixed$ALT)
-		#fix the rownames
-		rownames(tmp) <- c(rownames(record)[1], fixed$name)
-		#return the VCF object with 2 rows
-		out <- rbind(out,tmp)
-	}
-	#return
-	out
-}
-
 
 #To solve the 'minimal representation problem' I borrowed an idea from 
 #http://www.cureffi.org/2014/04/24/converting-genetic-variants-to-their-minimal-representation/
