@@ -10,7 +10,7 @@ while getopts cfp flag; do
 	case $flag in
 		c)
 		#Return the Consequence of the first transcript
-		echo $json | jq -r '.vep_annotations | .[0] | .Consequence'
+		echo $json | jq -r '.vep_annotations | .[0] | .major_consequence'
 		;;
 		f)
 		#Return the population allele frequency
