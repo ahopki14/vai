@@ -16,11 +16,11 @@ file for use in other analyses which might need a VCF.
 
 # Future Directions
 * Re-write the exac lookup using the API's batch functionality
-  *I used the individual lookup methods in the API because I thought it
+  * I used the individual lookup methods in the API because I thought it
 would be nice to have a function that did a single query
-  *This works fine, but is a little slow (I usually complete the ~7000
+  * This works fine, but is a little slow (I usually complete the ~7000
 queries in about 8 minutes)
 * Include info from other sources
-  *The big thing that is missing is the gene names for variants that are
+  * The big thing that is missing is the gene names for variants that are
 not annotated in the ExAC database, expecially insertions/deletions which are
 unlikely to be shared by other individuals.  
