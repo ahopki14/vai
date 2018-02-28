@@ -3,7 +3,6 @@ library(VariantAnnotation)
 library(dplyr)
 
 v_total <- readVcf(file='./data/coding_challenge_final.vcf')
-source('functions.R')
 
 #------------- Fix multi-allelic variants ---------------------------------
 
