@@ -1,3 +1,13 @@
+#' exac
+#' 
+#' Query ExAC database for Consequence, Allele Frequency, PolyPhen Score and
+#' gene SYMBOL
+#'
+#' @param var A single variant in the format chr-pos-ref-alt
+#' 
+#' @return A vector of the four items to look up 
+#' @author Alexander Hopkins
+#' @export
 
 #a function to call the shell script which does the ExAC lookup
 exac <- function(var){

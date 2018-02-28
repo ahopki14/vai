@@ -1,3 +1,18 @@
+#' simplify_vcf
+#' 
+#' simplify_vcf identifies records which may have been expanded when converting
+#' CollapsedVCF to ExpandedVCF, simplifies those records, and returns a
+#' corrected vcf of the same length as the input  
+#'
+#' @param vcf An ExpandedVCF object
+#' 
+#' @return An ExpandedVCF object of the same length as the input with necessary
+#' records simplified
+#' 
+#' @seealso \code{\link{simplify_variant}} 
+#' @author Alexander Hopkins
+#' @export
+
 #a function to apply the simplify_variant function to all
 #necessary records of a vcf
 simplify_vcf <- function(vcf){
