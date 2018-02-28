@@ -1,7 +1,7 @@
 
 #a function to call the shell script which does the ExAC lookup
 exac <- function(var){
-	out <- system(paste('sh exac_lookup.sh -cfp',var), intern=T)
+	out <- system(paste('sh exac_lookup.sh -cfps',var), intern=T)
 	#clean up the output (NA instead of empty or 'null')
 	out[out==''] <- NA
 	out[out=='null'] <- NA
@@ -69,9 +69,11 @@ simplify_variant <- function(x){
 	#fix the record
 	REF <- paste0(REF, collapse='')
 	ALT <- paste0(ALT, collapse='')
-	ref(x) <- DNAStringSet(REF)
-	alt(x) <- DNAStringSet(ALT)
-	rownames(x) <- paste0(sp[1],':',POS,'_',REF,'/',ALT)
+	out <- x
+	ref(out) <- DNAStringSet(REF)
+	alt(out) <- DNAStringSet(ALT)
+	#rownames(x) <- paste0(sp[1],':',POS,'_',REF,'/',ALT)
+	names(out@rowRanges)[1] <- paste0(sp[1],':',POS,'_',REF,'/',ALT)
 	#return x
-	x
+	out
 }
