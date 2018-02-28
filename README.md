@@ -32,3 +32,24 @@ not annotated in the ExAC database, especially insertions/deletions which are
 unlikely to be shared by other individuals.  
 * I tried to write this to be portable, but I have not tested it on Windows
   systems 
+
+
+## What are the columns in `table.csv`?
+Header        | Description
+--------------|------------
+Type          | Type of variant, i.e. snp, ins, etc
+AlleleFreq    | Allele Frequency reported in the VCF
+ReadDepth     | Total reads covering the variant
+GenoType      | 0/1,0/2, etc.=Hetrozygous; 1/1=Homozygous    
+AltReads      | Number of reads supporting the Alternate
+RefReads      | Number of reads supporting the Reference
+PctAlt        | Percentage of reads supporting Alternate
+VariantNames  | chr-pos-ref-alt, Used to query the ExAC database
+Consequence   | The reported Major Consequence from ExAC
+PopAlleleFreq | The frequency of the variant in the ExAC data
+PolyPhen      | Score summarizing the impact of the mutation (0=benign, 1=major)
+GeneName      | If the variant is in ExAC, the gene SYMBOL of the gene containing the variant
+
+
+
+
