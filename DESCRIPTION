@@ -1,0 +1,13 @@
+Package: vai
+Title: Package to annotate VCF files with info from ExAC Database
+Version: 0.0.1
+Authors@R: person("Alexander", "Hopkins", email = "ahopki14@jhmi.edu", role = c("aut", "cre"))
+Description: This package provides tools to annotate variants from a VCF file
+using data looked up via the ExAC API. The script demonstrates the process of
+splitting the vcf file to one variant per line, fixing the annotations
+associated with that splitting process, and creating a newly annotated VCF and
+easier to read table. 
+Depends: R (>= 3.3.3)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
