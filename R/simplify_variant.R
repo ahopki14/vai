@@ -1,12 +1,3 @@
-#a function to call the shell script which does the ExAC lookup
-exac <- function(var){
-	out <- system(paste('sh exac_lookup.sh -cfps',var), intern=T)
-	#clean up the output (NA instead of empty or 'null')
-	out[out==''] <- NA
-	out[out=='null'] <- NA
-	#return
-	out
-}
 
 #To solve the 'minimal representation problem' I borrowed an idea from 
 #http://www.cureffi.org/2014/04/24/converting-genetic-variants-to-their-minimal-representation/
@@ -44,22 +35,3 @@ simplify_variant <- function(x){
 	out
 }
 
-#a function to apply the simplify_variant function to all
-#necessary records of a vcf
-simplify_vcf <- function(vcf){
-	stopifnot(class(vcf)=='ExpandedVCF')
-	#identify rows which require fixes and fix them
-	#  the variant names, reference and alternate alleles and 
-	#  position are all fixed 
-	w <- grep('2', geno(vcf)$GT)
-	fixed_records  <- sapply(vcf[w], simplify_variant)
-
-	#sanity check that all records were checked
-	stopifnot(length(fixed_records)==length(w))
-
-	#put the new records back in the original vcf data file
-	for(a in seq_along(fixed_records)){
-		vcf[w[a]] <- fixed_records[[a]]
-	}
-	vcf
-}
