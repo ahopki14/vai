@@ -40,8 +40,7 @@ Header        | Description
 Type          | Type of variant, i.e. snp, ins, _etc._
 AlleleFreq    | Allele Frequency reported in the VCF
 ReadDepth     | Total reads covering the variant
-GenoType      | 0/1,0/2, _etc._=Hetrozygous
-              | 1/1=Homozygous    
+GenoType      | 0/1,0/2, _etc._=Hetrozygous, 1/1=Homozygous    
 AltReads      | Number of reads supporting the Alternate
 RefReads      | Number of reads supporting the Reference
 PctAlt        | Percentage of reads supporting Alternate
