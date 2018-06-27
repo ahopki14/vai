@@ -27,5 +27,3 @@ exac <- function(var){
 	out
 }
 
-#make some change
-
